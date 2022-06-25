@@ -5,5 +5,4 @@ admin.site.register(Customer)
 admin.site.register(Food)
 admin.site.register(Category)
 admin.site.register(Comment)
-admin.site.register(OrderItem)
-admin.site.register(Order)
+

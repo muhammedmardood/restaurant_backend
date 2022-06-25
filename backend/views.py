@@ -1,20 +1,14 @@
 from django.shortcuts import render, HttpResponse
 from .serializers import (
-        AddOrderedFoodsSerializer, 
         CategorySerializer, 
         FoodSerializer, 
         CommentSerializer, 
-        OrderSerializer,
-        CustomerSerializer,
-        OrderSerializer,
     )
 from .models import (
         Category, 
         Food, 
         Comment, 
-        OrderItem,
         Customer,
-        Order,
     )
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -25,7 +19,7 @@ from rest_framework.decorators import api_view
 def api_urls(request):
     urls = {
             "Categories: https://mardood.pythonanywhere.com/api/v1.1/categories/",
-            "Category Details: https://mardood.pythonanywhere.com/api/v1.1/categorie/[category id]/",
+            "Category Details: https://mardood.pythonanywhere.com/api/v1.1/categories/[category id]/",
             "Food list: https://mardood.pythonanywhere.com/api/v1.1/food/",
             "Food details: https://mardood.pythonanywhere.com/api/v1.1/food/[food id]/",
             "Comments: https://mardood.pythonanywhere.com/api/v1.1/comments/",
@@ -39,7 +33,7 @@ def api_urls(request):
 
 class CategoryList(APIView):
     def get(self, request, format=None):
-        categories = Category.objects.all()
+        categories = Category.objects.all().order_by("-id")
         serializer = CategorySerializer(categories, many=True)
 
         return Response(serializer.data)
