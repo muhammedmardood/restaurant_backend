@@ -65,20 +65,6 @@ class FoodDetail(APIView):
         serializer = FoodSerializer(foods)
         return Response(serializer.data)
 
-
-class FoodDetailById(APIView):
-    def get_object(self, pk):
-        try:
-            return Food.objects.get(pk=pk)
-        except Food.DoesNotExist:
-            HttpResponse("Erorr 404, Not Found")
-
-    def get(self, request, pk, format=None):
-        foods = self.get_object(pk)
-        serializer = FoodSerializer(foods)
-        return Response(serializer.data)
-
-
 @api_view(["POST"])
 def foodAdd(request):
     if request.method == "POST":
@@ -118,6 +104,7 @@ class CommentList(APIView):
         serializer = CommentSerializer(comments, many=True)
 
         return Response(serializer.data)
+
 @api_view(["POST"])
 def commentsAdd(request):
     if request.method == "POST":
@@ -126,29 +113,4 @@ def commentsAdd(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class OrderedFoodsView(APIView):
-    def get(self, request, format=None):
-        orderedfoods = Order.objects.all()
-        serializer = OrderSerializer(orderedfoods, many=True)
-
-        return Response(serializer.data)
-
-
-@api_view(["POST"])
-def addOrderItems(request):
-    if request.method == "POST":
-        serializer = AddOrderedFoodsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class Customers(APIView):
-    def get(self, request, format=None):
-        customers = Customer.objects.all()
-        serializer = CustomerSerializer(customers, many=True)
-
-        return Response(serializer.data)
 

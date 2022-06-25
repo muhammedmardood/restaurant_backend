@@ -11,8 +11,4 @@ urlpatterns = [
     path("comments/add/", commentsAdd),
     path("categories/add/", categoryAdd),
     path("food/add/", foodAdd),
-    path("orders/", OrderedFoodsView.as_view()),
-    path("orderitems/add", addOrderItems),
-    path("customers/", Customers.as_view()),
-
 ]
